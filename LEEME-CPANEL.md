@@ -4,6 +4,7 @@ Este paquete conserva el diseño de los dos HTML proporcionados y conecta el sit
 
 ## Qué incluye
 
+- Menú móvil desplegable, logo a color, favicon configurable y enlaces HTTPS opcionales en productos.
 - Sitio público responsive: inicio, portafolio con filtros, productos, noticias y showreel.
 - Panel con contraseña: textos, logo, colores, proyectos, noticias, productos, showreel, categorías, correo, WhatsApp y contactos.
 - Cambios persistentes en MySQL; contactos en una tabla separada para evitar que una edición los borre.
@@ -60,6 +61,7 @@ public_html/
     .user.ini
     uploads/.htaccess
 LEEME-CPANEL.md
+ACTUALIZAR.md
 ```
 
 Para un dominio cuya raíz sea `/home/TUUSUARIO/public_html`:
@@ -117,10 +119,10 @@ El instalador no se puede ejecutar otra vez una vez creado el administrador, inc
 
 1. Abre `https://TU-DOMINIO/admin.php` e ingresa la contraseña creada.
 2. En **Ajustes**, pon tu correo real y WhatsApp con código de país, por ejemplo `50688880000`. Si no se configura WhatsApp, los botones usan el correo de contacto.
-3. En **Inicio (landing)**, revisa títulos, textos, cifras, logo y colores.
+3. En **Inicio (landing)**, revisa títulos, textos, cifras, logo, icono de pestaña y colores. Después de subir cada imagen, espera a que termine la carga y pulsa Guardar cambios para publicarla.
 4. En **Portafolio**, reemplaza los proyectos de ejemplo por casos reales o desactiva su visibilidad.
 5. En **Noticias**, reemplaza o elimina las tarjetas de ejemplo. Puedes marcar una como destacada.
-6. En **Productos** y **Showreel**, configura el contenido real. La carga admite JPG, PNG, WebP, GIF, MP4 y WebM, hasta 20 MB por archivo. Las imágenes subidas desde el panel se reducen a 1600 píxeles por su lado mayor. Para videos grandes utiliza enlaces HTTPS, YouTube o Vimeo.
+6. En **Productos**, puedes indicar una URL HTTPS opcional: se mostrará un botón Visitar sitio que abre otra pestaña. En **Productos** y **Showreel**, configura el contenido real. La carga admite JPG, PNG, WebP, GIF, MP4 y WebM, hasta 20 MB por archivo. Las imágenes subidas desde el panel se reducen a 1600 píxeles por su lado mayor. Para videos grandes utiliza enlaces HTTPS, YouTube o Vimeo.
 7. Espera el mensaje de confirmación del guardado. Si aparece un error, el cambio no está confirmado. Si se detecta otra edición simultánea, exporta tus cambios si los necesitas y recarga antes de continuar.
 8. Abre el sitio en otro navegador o en incógnito para comprobar que el cambio es público.
 

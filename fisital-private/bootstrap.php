@@ -94,13 +94,18 @@ function media(mixed $v): string {
     if (!filter_var($s,FILTER_VALIDATE_URL) || strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https' || parse_url($s,PHP_URL_USER)!==null || preg_match('/[\s\x00-\x1f"<>\\\\]/',$s)) fail('Usa un archivo subido o un enlace HTTPS válido.');
     return $s;
 }
+function website_url(mixed $v): string {
+    $s=media($v);
+    if ($s!=='' && strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https') fail('La URL del producto debe comenzar con https://.');
+    return $s;
+}
 function color(mixed $v): string { $s=text($v,7); if (!preg_match('/^#[0-9a-f]{6}$/iD',$s)) fail('Color inválido.'); return $s; }
 function document_data(mixed $input): array {
     if (!is_array($input)) fail('Contenido inválido.');
     $schemas=[
         'portfolio'=>['title','cat','year','client','emoji','a','b','vis','img','video'],
         'news'=>['title','cat','date','read','summary','a','b','feat','img'],
-        'products'=>['name','icon','status','desc','img'],
+        'products'=>['name','icon','status','desc','img','url'],
     ]; $d=[];
     foreach ($schemas as $key=>$fields) {
         if (!isset($input[$key]) || !is_array($input[$key]) || !array_is_list($input[$key]) || count($input[$key])>500) fail('Lista inválida: '.$key);
@@ -110,6 +115,7 @@ function document_data(mixed $input): array {
             $r=['id'=>$item['id']]; $ids[$item['id']]=true;
             foreach ($fields as $field) {
                 if (in_array($field,['vis','feat'],true)) { if (!is_bool($item[$field]??null)) fail('Indicador inválido.'); $r[$field]=$item[$field]; }
+                elseif ($field==='url') $r[$field]=website_url($item[$field]??'');
                 elseif (in_array($field,['img','video'],true)) $r[$field]=media($item[$field]??'');
                 elseif (in_array($field,['a','b'],true)) $r[$field]=color($item[$field]??'');
                 else $r[$field]=text($item[$field]??'',5000);
@@ -125,11 +131,11 @@ function document_data(mixed $input): array {
         if (!isset($cfg[$key]) || !is_array($cfg[$key]) || !array_is_list($cfg[$key]) || count($cfg[$key])>50) fail('Categorías inválidas.');
         $d['cfg'][$key]=array_map(fn($v)=>text($v,100),$cfg[$key]);
     }
-    $homeKeys=['logo','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
+    $homeKeys=['logo','favicon','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
     $d['home']=[]; if (!is_array($input['home']??[])) fail('Inicio inválido.');
     foreach ($input['home']??[] as $key=>$value) {
         if (!in_array($key,$homeKeys,true)) fail('Campo de inicio desconocido.');
-        $d['home'][$key]=$key==='logo'?media($value):(in_array($key,['col1','col2'],true)?color($value):text($value));
+        $d['home'][$key]=in_array($key,['logo','favicon'],true)?media($value):(in_array($key,['col1','col2'],true)?color($value):text($value));
     }
     $reel=$input['reel']??[]; if (!is_array($reel)) fail('Showreel inválido.');
     $d['reel']=['title'=>text($reel['title']??'Historias con calidad de cine'),'text'=>text($reel['text']??'Mira nuestro trabajo en acción.'),'poster'=>media($reel['poster']??''),'video'=>media($reel['video']??'')];
