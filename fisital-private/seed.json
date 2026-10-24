@@ -1,0 +1,169 @@
+{
+  "cfg": {
+    "email": "hola@fisital.com",
+    "whatsapp": "",
+    "cats": [
+      "Video",
+      "Foto",
+      "Eventos",
+      "Soporte TI"
+    ],
+    "ncats": [
+      "Fisital",
+      "Soporte TI",
+      "Audiovisual",
+      "Tecnología"
+    ]
+  },
+  "portfolio": [
+    {
+      "id": 1,
+      "title": "Campaña de lanzamiento",
+      "cat": "Video",
+      "year": "2026",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "🎬",
+      "a": "#1c3a73",
+      "b": "#4fd1ff",
+      "vis": true
+    },
+    {
+      "id": 2,
+      "title": "Congreso empresarial",
+      "cat": "Eventos",
+      "year": "2026",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "🎤",
+      "a": "#3a1f73",
+      "b": "#8b6bff",
+      "vis": true
+    },
+    {
+      "id": 3,
+      "title": "Catálogo de producto",
+      "cat": "Foto",
+      "year": "2025",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "📷",
+      "a": "#4a1f52",
+      "b": "#ff6bd1",
+      "vis": true
+    },
+    {
+      "id": 4,
+      "title": "Migración de red y servidores",
+      "cat": "Soporte TI",
+      "year": "2026",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "🖧",
+      "a": "#1c3a73",
+      "b": "#8b6bff",
+      "vis": true
+    },
+    {
+      "id": 5,
+      "title": "Spot regional 30s",
+      "cat": "Video",
+      "year": "2025",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "🎥",
+      "a": "#52391f",
+      "b": "#ffb84f",
+      "vis": true
+    },
+    {
+      "id": 6,
+      "title": "Soporte gestionado, 80 equipos",
+      "cat": "Soporte TI",
+      "year": "2025",
+      "client": "Cliente · reemplazar por caso real",
+      "emoji": "🛡",
+      "a": "#2a1f5c",
+      "b": "#4fffa1",
+      "vis": true
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "Presentamos nuestra nueva línea de productos para empresas",
+      "cat": "Fisital",
+      "date": "2026-10-23",
+      "read": "5 min",
+      "summary": "Conoce los sistemas que estamos construyendo y cómo te ayudarán a operar mejor.",
+      "feat": true,
+      "a": "#15275a",
+      "b": "#8b6bff"
+    },
+    {
+      "id": 2,
+      "title": "5 señales de que tu empresa necesita soporte gestionado",
+      "cat": "Soporte TI",
+      "date": "2026-10-20",
+      "read": "4 min",
+      "summary": "",
+      "feat": false,
+      "a": "#1c3a73",
+      "b": "#4fd1ff"
+    },
+    {
+      "id": 3,
+      "title": "Cómo planear un video corporativo que sí convierte",
+      "cat": "Audiovisual",
+      "date": "2026-10-14",
+      "read": "6 min",
+      "summary": "",
+      "feat": false,
+      "a": "#3a1f73",
+      "b": "#8b6bff"
+    },
+    {
+      "id": 4,
+      "title": "Ciberseguridad para pymes: lo básico en 2026",
+      "cat": "Tecnología",
+      "date": "2026-10-08",
+      "read": "5 min",
+      "summary": "",
+      "feat": false,
+      "a": "#0f4a52",
+      "b": "#4fffd1"
+    },
+    {
+      "id": 5,
+      "title": "Detrás de cámaras: rodaje en exteriores",
+      "cat": "Fisital",
+      "date": "2026-09-30",
+      "read": "3 min",
+      "summary": "",
+      "feat": false,
+      "a": "#52391f",
+      "b": "#ffb84f"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "FisiDesk",
+      "icon": "🎫",
+      "status": "Disponible pronto",
+      "desc": "Mesa de ayuda con tickets, SLA y reportes para tu equipo de TI."
+    },
+    {
+      "id": 2,
+      "name": "FisiMonitor",
+      "icon": "📡",
+      "status": "En desarrollo",
+      "desc": "Monitoreo de servidores, redes y respaldos con alertas en tiempo real."
+    },
+    {
+      "id": 3,
+      "name": "FisiMedia",
+      "icon": "🎬",
+      "status": "En desarrollo",
+      "desc": "Plataforma para aprobar videos y gestionar proyectos audiovisuales."
+    }
+  ],
+  "leads": [],
+  "home": {},
+  "reel": {}
+}

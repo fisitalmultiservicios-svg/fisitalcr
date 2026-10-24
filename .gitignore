@@ -1,0 +1,4 @@
+/fisital-private/config.php
+/public_html/uploads/*
+!/public_html/uploads/.htaccess
+*.zip
