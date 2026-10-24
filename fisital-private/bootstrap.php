@@ -96,7 +96,7 @@ function media(mixed $v): string {
 }
 function website_url(mixed $v): string {
     $s=media($v);
-    if ($s!=='' && strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https') fail('La URL del producto debe comenzar con https://.');
+    if ($s!=='' && strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https') fail('La URL debe comenzar con https://.');
     return $s;
 }
 function color(mixed $v): string { $s=text($v,7); if (!preg_match('/^#[0-9a-f]{6}$/iD',$s)) fail('Color inválido.'); return $s; }
@@ -106,8 +106,10 @@ function document_data(mixed $input): array {
         'portfolio'=>['title','cat','year','client','emoji','a','b','vis','img','video'],
         'news'=>['title','cat','date','read','summary','a','b','feat','img'],
         'products'=>['name','icon','status','desc','img','url'],
+        'clients'=>['name','img','url','vis'],
     ]; $d=[];
     foreach ($schemas as $key=>$fields) {
+        if ($key==='clients' && !array_key_exists($key,$input)) $input[$key]=[];
         if (!isset($input[$key]) || !is_array($input[$key]) || !array_is_list($input[$key]) || count($input[$key])>500) fail('Lista inválida: '.$key);
         $d[$key]=[]; $ids=[];
         foreach ($input[$key] as $item) {
@@ -120,6 +122,7 @@ function document_data(mixed $input): array {
                 elseif (in_array($field,['a','b'],true)) $r[$field]=color($item[$field]??'');
                 else $r[$field]=text($item[$field]??'',5000);
             }
+            if ($key==='clients' && $r['name']==='') fail('Escribe el nombre del cliente.');
             $d[$key][]=$r;
         }
     }
@@ -131,7 +134,7 @@ function document_data(mixed $input): array {
         if (!isset($cfg[$key]) || !is_array($cfg[$key]) || !array_is_list($cfg[$key]) || count($cfg[$key])>50) fail('Categorías inválidas.');
         $d['cfg'][$key]=array_map(fn($v)=>text($v,100),$cfg[$key]);
     }
-    $homeKeys=['logo','favicon','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
+    $homeKeys=['logo','favicon','cl1','cl2','nav6','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
     $d['home']=[]; if (!is_array($input['home']??[])) fail('Inicio inválido.');
     foreach ($input['home']??[] as $key=>$value) {
         if (!in_array($key,$homeKeys,true)) fail('Campo de inicio desconocido.');

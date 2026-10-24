@@ -1,6 +1,6 @@
 # FisitalCR
 
-**Instalaciones existentes:** [descargar actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel-actualizacion.zip) y seguir [ACTUALIZAR.md](ACTUALIZAR.md). Incluye logo a color, favicon, enlaces de productos y menú móvil. No requiere reinstalar ni cambiar la base de datos.
+**Instalaciones existentes:** [descargar actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel-actualizacion.zip) y seguir [ACTUALIZAR.md](ACTUALIZAR.md). Incluye sección de clientes con logo y enlace, logo a color, favicon, enlaces de productos y menú móvil. No requiere reinstalar ni cambiar la base de datos.
 
 [Descargar ZIP para cPanel](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel.zip) · [Guía de instalación en cPanel](LEEME-CPANEL.md)
 
@@ -10,4 +10,4 @@ La guía para el hosting está en [LEEME-CPANEL.md](LEEME-CPANEL.md). El ZIP de 
 
 Para desarrollo, usar este checkout aislado; no crear un worktree salvo petición expresa. `tools/Dockerfile` prepara PHP 8.3 con PDO MySQL. Necesita una instancia MySQL/MariaDB y `fisital-private/config.php` privado. En local puede usarse `require_https=false`; producción requiere HTTPS.
 
-Validación: `python3 tests/smoke.py` sobre base LOCAL VACÍA y `node tests/browser.cjs` y `node tests/branding-mobile.cjs` después. Consultar las cabeceras de ambos archivos para requisitos. Son pruebas destructivas de datos exclusivamente locales; no ejecutarlas contra producción. Las pruebas del navegador requieren Playwright y Chromium. No desplegar herramientas ni pruebas en la raíz pública.
+Validación: `python3 tests/smoke.py` sobre base LOCAL VACÍA y `node tests/browser.cjs` y `node tests/branding-mobile.cjs` y `node tests/clients.cjs` después. Consultar las cabeceras de ambos archivos para requisitos. Son pruebas destructivas de datos exclusivamente locales; no ejecutarlas contra producción. Las pruebas del navegador requieren Playwright y Chromium. No desplegar herramientas ni pruebas en la raíz pública.

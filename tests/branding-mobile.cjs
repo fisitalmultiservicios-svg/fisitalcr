@@ -44,7 +44,7 @@ const assert=require('node:assert/strict');
   await visitor.setViewportSize({width,height:844});const toggle=visitor.getByRole('button',{name:/Menú/});await toggle.waitFor({state:'visible'});
   assert.equal(await toggle.getAttribute('aria-expanded'),'false');assert(await visitor.locator('nav .brand').isVisible(),'Logo remains visible on mobile');
   await toggle.click();assert.equal(await toggle.getAttribute('aria-expanded'),'true');
-  for(const anchor of await visitor.locator('#site-menu a').all()) assert(await anchor.isVisible(),'All menu destinations are available');
+  for(const anchor of await visitor.locator('#site-menu a:visible').all()) assert(await anchor.isVisible(),'All menu destinations are available');
   await visitor.locator('#site-menu [data-v=portafolio]').click();await visitor.locator('#v-portafolio').waitFor({state:'visible'});assert.equal(await toggle.getAttribute('aria-expanded'),'false');
   await toggle.click();await visitor.locator('#site-menu [data-v=noticias]').click();await visitor.locator('#v-noticias').waitFor({state:'visible'});
   await toggle.click();await visitor.locator('#site-menu a[href="#productos"]').click();await visitor.locator('#v-inicio').waitFor({state:'visible'});

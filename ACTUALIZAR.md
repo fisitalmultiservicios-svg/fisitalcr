@@ -1,10 +1,12 @@
-# Actualización: logo, favicon, enlaces de productos y menú móvil
+# Actualización: clientes, logo, favicon, enlaces de productos y menú móvil
 
 Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos.
 
+La versión actual añade **Nuestros clientes** al landing y **Clientes** al panel, y conserva las mejoras anteriores. No reemplaza contactos, imágenes, contraseñas ni configuración.
+
 ## Descargar
 
-[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel-actualizacion.zip)
+[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-clientes.zip)
 
 ## Instalar desde cPanel
 
@@ -14,13 +16,25 @@ Este paquete actualiza una instalación existente. No ejecutes otra vez instalar
    - `public_html/admin.php`
    - `fisital-private/bootstrap.php`
 3. En **Administrador de archivos**, entra a la carpeta principal de tu cuenta, donde están `public_html` y `fisital-private`, una junto a la otra.
-4. Sube `fisitalcr-cpanel-actualizacion.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
+4. Sube `fisitalcr-actualizacion-clientes.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
 5. Selecciona el ZIP y pulsa **Extraer** en la misma carpeta. Acepta reemplazar los tres archivos. No elimines las carpetas actuales: se deben combinar sus contenidos.
 6. Verifica que los archivos nuevos quedaron en las tres rutas indicadas. El ZIP no incluye `config.php`, `conexion.php`, `uploads`, el instalador ni archivos SQL. Mantén intactos tu configuración privada, medios y base de datos.
 7. Elimina el ZIP del hosting. La guía ACTUALIZAR.md queda fuera de public_html.
 8. Abre de nuevo `https://fisitalcr.com/admin.php` y pulsa **Ctrl + F5** para recargar sin caché. Inicia sesión con tu contraseña habitual.
 
 Si tu dominio tiene una raíz pública distinta de public_html, mueve manualmente los dos PHP públicos a esa raíz, y bootstrap.php a la carpeta privada existente. No modifiques conexion.php.
+
+## Nuestros clientes
+
+1. En el panel abre **Clientes**, en el menú lateral.
+2. Pulsa **+ Agregar** y escribe el nombre del cliente.
+3. Sube su logo y espera el mensaje **Listo**. El logo conserva sus colores; se muestra completo, sin recortes.
+4. Introduce la URL del cliente con `https://`, por ejemplo `https://cliente.com`. Si dejas el campo vacío, su tarjeta se muestra sin enlace.
+5. Mantén marcada **Visible en el sitio** y pulsa **Guardar**.
+6. En el inicio aparecerá **Nuestros clientes**, antes de Productos. Tocar el logo o el nombre abre el sitio del cliente en otra pestaña.
+7. Puedes editar, ordenar con las flechas, ocultar o eliminar clientes desde el panel. El título y la descripción se cambian en **Inicio (landing) → Sección Nuestros clientes**.
+
+La sección y su opción de menú se ocultan si no hay clientes visibles. Los clientes empiezan vacíos: no se publican empresas ficticias. Los datos existentes son compatibles sin cambios de tablas ni reinstalación.
 
 ## Logo e icono de pestaña
 
