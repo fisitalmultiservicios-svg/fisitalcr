@@ -1,5 +1,7 @@
 # FisitalCR
 
+Si el navegador rechaza el ZIP, [descargar la misma actualización en TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-videos-whatsapp.tar.gz). Se sube sin descomprimir al directorio principal de cPanel y se usa Extraer, igual que el ZIP.
+
 **Instalaciones existentes:** [descargar actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel-actualizacion.zip) y seguir [ACTUALIZAR.md](ACTUALIZAR.md). Incluye videos externos (Facebook/Reels, YouTube/Shorts, Vimeo, Drive, MP4/WebM), portadas cuando el proveedor las ofrece y destinos web o wa.me para el contacto, clientes y productos; además de las mejoras anteriores. No requiere reinstalar ni cambiar la base de datos.
 
 [Descargar ZIP para cPanel](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel.zip) · [Guía de instalación en cPanel](LEEME-CPANEL.md)

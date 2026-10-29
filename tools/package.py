@@ -24,3 +24,23 @@ for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actua
   assert set(archive.namelist())-set(files) <= {'fisital-private/','public_html/','public_html/uploads/'}
   for name in files: assert archive.read(name)==(root/name).read_bytes()
  print(filename, target.stat().st_size, 'bytes; contenido verificado')
+
+# Alternative supported by cPanel when the browser rejects ZIP downloads.
+import io
+import tarfile
+from zipfile import ZipFile
+source = root/'descargas/fisitalcr-actualizacion-videos-whatsapp.zip'
+target = root/'descargas/fisitalcr-actualizacion-videos-whatsapp.tar.gz'
+with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:
+ for entry in zip_source.infolist():
+  if entry.is_dir(): continue
+  data=zip_source.read(entry.filename)
+  info=tarfile.TarInfo(entry.filename);info.size=len(data)
+  info.mode=0o600 if entry.filename.startswith('fisital-private/') else 0o644
+  archive.addfile(info,io.BytesIO(data))
+with tarfile.open(target,'r:gz') as archive, ZipFile(source) as zip_source:
+ assert set(archive.getnames())==set(zip_source.namelist())
+ for entry in archive.getmembers():
+  assert entry.isfile() and not entry.name.startswith('/') and '..' not in Path(entry.name).parts
+  assert archive.extractfile(entry).read()==zip_source.read(entry.name)
+print(target.name,target.stat().st_size,'bytes; contenido idéntico al ZIP verificado')
