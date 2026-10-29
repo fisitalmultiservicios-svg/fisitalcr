@@ -1,5 +1,7 @@
 # FisitalCR
 
+Corrección de navegación pública: [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.tar.gz). Portafolio y Noticias funcionan de forma independiente de la carga de reproductores.
+
 Última actualización: [multimedia ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.tar.gz): videos verticales/horizontales e imágenes ampliadas. Ver [ACTUALIZAR.md](ACTUALIZAR.md).
 
 Si el navegador rechaza el ZIP, [descargar la misma actualización en TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-videos-whatsapp.tar.gz). Se sube sin descomprimir al directorio principal de cPanel y se usa Extraer, igual que el ZIP.
@@ -19,3 +21,5 @@ Validación: `python3 tests/smoke.py` sobre base LOCAL VACÍA y `node tests/brow
 Pruebas de enlaces: `node tests/enlaces.cjs`. Después de las pruebas de navegador anteriores, ejecutar `node tests/videos-contact.cjs`; los proveedores externos se simulan y sus permisos reales deben comprobarse en el hosting.
 
 `tests/orientation-images.cjs` prueba orientación con MP4 reales generados localmente en /tmp mediante ffmpeg, proveedores simulados, tamaños de pantalla y ampliación de imágenes. Ejecutar después de smoke.py y las demás pruebas de navegador.
+
+`tests/navigation-resilience.cjs` verifica navegación de escritorio y móvil con el módulo multimedia actual, anterior, ausente o con error. Ejecutar después de smoke.py y antes de agotar los límites locales de intentos de login.

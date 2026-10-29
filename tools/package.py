@@ -8,7 +8,7 @@ full = common + ['LEEME-CPANEL.md', 'ACTUALIZAR.md', 'fisital-private/.htaccess'
  'public_html/.htaccess', 'public_html/.user.ini',
  'public_html/conexion.php', 'public_html/instalar.php', 'public_html/uploads/.htaccess']
 (root/'descargas').mkdir(exist_ok=True)
-for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-videos-whatsapp.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-multimedia.zip', common+['ACTUALIZAR.md'])]:
+for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-videos-whatsapp.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-multimedia.zip', common+['ACTUALIZAR.md']), ('fisitalcr-correccion-portafolio.zip', common+['ACTUALIZAR.md'])]:
  target = root/'descargas'/filename
  with ZipFile(target, 'w', ZIP_DEFLATED) as archive:
   # No directory entries in update ZIP: keep permissions of existing directories.
@@ -29,7 +29,7 @@ for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actua
 import io
 import tarfile
 from zipfile import ZipFile
-for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia']:
+for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia','fisitalcr-correccion-portafolio']:
  source = root/'descargas'/(basename+'.zip')
  target = root/'descargas'/(basename+'.tar.gz')
  with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:

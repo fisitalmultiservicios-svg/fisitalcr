@@ -1,4 +1,4 @@
-# Actualización: videos verticales y horizontales e imágenes ampliadas
+# Corrección de navegación pública y actualización multimedia
 
 Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos. El ZIP contiene cinco archivos de código y esta guía.
 
@@ -6,9 +6,9 @@ La versión actual añade reproductores de videos externos y un destino configur
 
 ## Descargar
 
-[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.zip)
+[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.zip)
 
-[Alternativa TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.tar.gz). Ambos paquetes contienen los mismos archivos; usa solo uno.
+[Alternativa TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.tar.gz). Ambos paquetes contienen los mismos archivos; usa solo uno.
 
 ## Instalar desde cPanel
 
@@ -19,13 +19,19 @@ La versión actual añade reproductores de videos externos y un destino configur
    - `public_html/api.php`
    - `fisital-private/bootstrap.php`
 3. En **Administrador de archivos**, entra a la carpeta principal de tu cuenta, donde están `public_html` y `fisital-private`, una junto a la otra.
-4. Sube `fisitalcr-actualizacion-multimedia.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
+4. Sube `fisitalcr-correccion-portafolio.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
 5. Selecciona el ZIP y pulsa **Extraer** en la misma carpeta. Acepta reemplazar index.php, admin.php, api.php y bootstrap.php. También se añade public_html/enlaces.js. No elimines las carpetas actuales: se deben combinar sus contenidos.
 6. Verifica que los archivos nuevos quedaron en las rutas indicadas y que exista public_html/enlaces.js. El ZIP no incluye `config.php`, `conexion.php`, `uploads`, el instalador ni archivos SQL. No omitas enlaces.js o api.php: son necesarios para las nuevas funciones. Mantén intactos tu configuración privada, medios y base de datos.
 7. Elimina el ZIP del hosting. La guía ACTUALIZAR.md queda fuera de public_html.
 8. Abre de nuevo `https://fisitalcr.com/admin.php` y pulsa **Ctrl + F5** para recargar sin caché. Inicia sesión con tu contraseña habitual.
 
 Si tu dominio tiene una raíz pública distinta de public_html, mueve manualmente los dos PHP públicos a esa raíz, y bootstrap.php a la carpeta privada existente. No modifiques conexion.php.
+
+## Corrección: Portafolio no abre en el sitio público
+
+La navegación pública se inicia antes que los reproductores, en un bloque independiente. Un error en un video o en el archivo auxiliar ya no debe impedir cambiar entre Inicio, Portafolio y Noticias. El sitio también admite el archivo auxiliar de la versión anterior, y los enlaces al JavaScript llevan una versión calculada a partir de su contenido para evitar caché desactualizada.
+
+Instala todos los archivos de este paquete y recarga con Ctrl + F5. No necesitas cambiar datos, volver a cargar tus proyectos ni reinstalar. Se comprobó el menú en escritorio y móvil con el archivo auxiliar actual, anterior, ausente y con errores simulados.
 
 ## Videos verticales y horizontales
 
