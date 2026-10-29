@@ -2,13 +2,13 @@
 from pathlib import Path
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 root = Path(__file__).resolve().parents[1]
-common = ['public_html/index.php', 'public_html/admin.php', 'fisital-private/bootstrap.php']
+common = ['public_html/index.php', 'public_html/admin.php', 'public_html/api.php', 'public_html/enlaces.js', 'fisital-private/bootstrap.php']
 full = common + ['LEEME-CPANEL.md', 'ACTUALIZAR.md', 'fisital-private/.htaccess',
  'fisital-private/config.example.php', 'fisital-private/schema.sql', 'fisital-private/seed.json',
- 'public_html/.htaccess', 'public_html/.user.ini', 'public_html/api.php',
+ 'public_html/.htaccess', 'public_html/.user.ini',
  'public_html/conexion.php', 'public_html/instalar.php', 'public_html/uploads/.htaccess']
 (root/'descargas').mkdir(exist_ok=True)
-for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md'])]:
+for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-videos-whatsapp.zip', common+['ACTUALIZAR.md'])]:
  target = root/'descargas'/filename
  with ZipFile(target, 'w', ZIP_DEFLATED) as archive:
   # No directory entries in update ZIP: keep permissions of existing directories.

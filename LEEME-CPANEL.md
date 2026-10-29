@@ -6,6 +6,7 @@ Este paquete conserva el diseño de los dos HTML proporcionados y conecta el sit
 
 - Sección Nuestros clientes: nombre, logo y URL, administrable desde el panel, con orden y visibilidad.
 - Menú móvil desplegable, logo a color, favicon configurable y enlaces HTTPS opcionales en productos.
+- Videos externos con reproductores de Facebook, YouTube, Vimeo y Drive; destino de contacto y enlaces wa.me configurables.
 - Sitio público responsive: inicio, portafolio con filtros, productos, noticias y showreel.
 - Panel con contraseña: textos, logo, colores, proyectos, noticias, productos, showreel, categorías, correo, WhatsApp y contactos.
 - Cambios persistentes en MySQL; contactos en una tabla separada para evitar que una edición los borre.
@@ -13,7 +14,7 @@ Este paquete conserva el diseño de los dos HTML proporcionados y conecta el sit
 - Sesión con caducidad de 30 minutos de inactividad, contraseñas con hash, protección CSRF, límites de intentos, validación de datos y control de ediciones simultáneas.
 - Exportación de contactos CSV y contenido/contactos JSON. El JSON NO incluye medios ni contraseña; su importación restaura contenido y conserva los contactos ya existentes. Para restaurar contactos usa el respaldo SQL completo.
 
-Las noticias conservan las tarjetas y resúmenes del diseño original; no incluyen páginas de artículos completos. Los formularios guardan contactos en el panel: no envían correos ni mensajes automáticos a WhatsApp. Los números, testimonios implícitos, proyectos y noticias iniciales son ejemplos del HTML, no datos verificados de tu empresa. Revísalos antes de anunciar el sitio.
+Las noticias conservan las tarjetas y resúmenes del diseño original; no incluyen páginas de artículos completos. El botón Hola, Fisital se puede dirigir a un sitio o a un enlace wa.me desde Ajustes. Los formularios guardan contactos en el panel: no envían correos ni mensajes automáticos a WhatsApp. Los números, testimonios implícitos, proyectos y noticias iniciales son ejemplos del HTML, no datos verificados de tu empresa. Revísalos antes de anunciar el sitio.
 
 ## 1. Respalda y localiza la carpeta del dominio
 
@@ -56,6 +57,7 @@ public_html/
     index.php
     admin.php
     api.php
+    enlaces.js
     conexion.php
     instalar.php
     .htaccess

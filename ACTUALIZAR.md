@@ -1,28 +1,50 @@
-# Actualización: clientes, logo, favicon, enlaces de productos y menú móvil
+# Actualización: videos externos, portadas y enlaces de WhatsApp
 
-Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos.
+Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos. El ZIP contiene cinco archivos de código y esta guía.
 
-La versión actual añade **Nuestros clientes** al landing y **Clientes** al panel, y conserva las mejoras anteriores. No reemplaza contactos, imágenes, contraseñas ni configuración.
+La versión actual añade reproductores de videos externos y un destino configurable para el botón Hola, Fisital, y acepta enlaces wa.me en clientes y productos. Conserva la sección de clientes, el logo, favicon y menú móvil. No reemplaza contactos, imágenes, contraseñas ni configuración.
 
 ## Descargar
 
-[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-clientes.zip)
+[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-videos-whatsapp.zip)
 
 ## Instalar desde cPanel
 
 1. Guarda los cambios pendientes y cierra el panel administrativo.
-2. Respalda la base de datos desde cPanel. Descarga también una copia de estos tres archivos actuales como respaldo, fuera de las carpetas públicas:
+2. Respalda la base de datos desde cPanel. Descarga también una copia de estos archivos actuales como respaldo, fuera de las carpetas públicas:
    - `public_html/index.php`
    - `public_html/admin.php`
+   - `public_html/api.php`
    - `fisital-private/bootstrap.php`
 3. En **Administrador de archivos**, entra a la carpeta principal de tu cuenta, donde están `public_html` y `fisital-private`, una junto a la otra.
-4. Sube `fisitalcr-actualizacion-clientes.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
-5. Selecciona el ZIP y pulsa **Extraer** en la misma carpeta. Acepta reemplazar los tres archivos. No elimines las carpetas actuales: se deben combinar sus contenidos.
-6. Verifica que los archivos nuevos quedaron en las tres rutas indicadas. El ZIP no incluye `config.php`, `conexion.php`, `uploads`, el instalador ni archivos SQL. Mantén intactos tu configuración privada, medios y base de datos.
+4. Sube `fisitalcr-actualizacion-videos-whatsapp.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
+5. Selecciona el ZIP y pulsa **Extraer** en la misma carpeta. Acepta reemplazar index.php, admin.php, api.php y bootstrap.php. También se añade public_html/enlaces.js. No elimines las carpetas actuales: se deben combinar sus contenidos.
+6. Verifica que los archivos nuevos quedaron en las rutas indicadas y que exista public_html/enlaces.js. El ZIP no incluye `config.php`, `conexion.php`, `uploads`, el instalador ni archivos SQL. No omitas enlaces.js o api.php: son necesarios para las nuevas funciones. Mantén intactos tu configuración privada, medios y base de datos.
 7. Elimina el ZIP del hosting. La guía ACTUALIZAR.md queda fuera de public_html.
 8. Abre de nuevo `https://fisitalcr.com/admin.php` y pulsa **Ctrl + F5** para recargar sin caché. Inicia sesión con tu contraseña habitual.
 
 Si tu dominio tiene una raíz pública distinta de public_html, mueve manualmente los dos PHP públicos a esa raíz, y bootstrap.php a la carpeta privada existente. No modifiques conexion.php.
+
+## Videos del portafolio y portada automática
+
+1. En **Portafolio → Editar**, pega la dirección en el campo de video. Espera a que termine cualquier subida pendiente y pulsa **Guardar**.
+2. Se reconocen Facebook/Reels, YouTube (incluidos Shorts y Live), Vimeo, Google Drive público y enlaces directos a MP4/WebM. Los archivos permanecen en sus proveedores; no se copian al hosting.
+3. Deja **Portada opcional** vacía para usar la portada automática cuando esté disponible. Si ya hay una imagen, esa imagen tiene prioridad; pulsa Quitar para usar la automática.
+4. YouTube usa su miniatura pública. Vimeo consulta su servicio oficial de metadatos y guarda solo la URL de la portada en una caché privada. Google Drive usa su miniatura si el archivo permite acceso público.
+5. Facebook muestra su reproductor oficial como vista previa, con la portada que el proveedor ofrezca. La vista previa se carga de forma diferida y sin reproducción automática. **Ver video** abre un reproductor más grande con el enlace original disponible.
+6. La reproducción y portada dependen de que el video sea público, el propietario permita inserción y el navegador permita al proveedor cargar su contenido. Algunos reels pueden exigir iniciar sesión o estar restringidos por región/edad. La web no puede quitar esas restricciones.
+7. Los archivos MP4/WebM no siempre incluyen una portada accesible como imagen. En ese caso añade un enlace HTTPS de imagen o una portada manual; no se descarga el video completo para generar una imagen.
+8. Para proveedores no reconocidos se ofrece **Abrir video original**, en lugar de tratar una página web como si fuera un archivo de video. Para un resultado más predecible y ligero, usa YouTube o Vimeo público.
+
+No se garantiza la reproducción de cualquier enlace de Facebook. El enlace de prueba `https://www.facebook.com/reel/2828086157523112` se reconoce como reel y se entrega al reproductor oficial. La red de desarrollo bloqueó la comprobación pública de Facebook; el video real debe comprobarse en el navegador del usuario.
+
+## Destino de Hola, Fisital y WhatsApp
+
+1. En el panel abre **Ajustes**.
+2. En **Destino del botón Hola, Fisital**, puedes introducir `https://otro-sitio.com/contacto`, `https://wa.me/50688880000` o simplemente `wa.me/50688880000?text=Hola`.
+3. Pulsa **Guardar ajustes**. Ese enlace tiene prioridad y abre en otra pestaña.
+4. Si dejas el campo vacío, se usa el número de WhatsApp con código de país y el mensaje configurados. Si tampoco hay número, se usa el correo de contacto (requiere una aplicación de correo en el dispositivo).
+5. En **Clientes** y **Productos**, el campo de enlace también acepta `wa.me/...`, `https://wa.me/...`, enlaces de WhatsApp Business `wa.me/message/...` y cualquier sitio HTTPS válido. Los enlaces wa.me se guardan con https:// automáticamente. No se admiten javascript:, enlaces inseguros a otros sitios ni archivos ejecutables.
 
 ## Nuestros clientes
 

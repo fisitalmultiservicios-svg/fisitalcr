@@ -4,6 +4,35 @@ require __DIR__.'/conexion.php';
 security_headers();
 $action=$_GET['action']??'';
 $method=$_SERVER['REQUEST_METHOD'];
+if ($method==='GET' && $action==='video_thumbnail') {
+    $url=media($_GET['url']??'');
+    $host=strtolower(parse_url($url,PHP_URL_HOST)??'');
+    if (!in_array($host,['vimeo.com','www.vimeo.com','player.vimeo.com'],true)) fail('Proveedor no compatible.',400);
+    $data=public_data();$allowed=array_column($data['portfolio'],'video');$allowed[]=$data['reel']['video']??'';
+    if (!in_array($url,$allowed,true)) fail('Video no publicado.',404);
+    $dir=FISITAL_PRIVATE_DIR.'/video-cache';$cache=$dir.'/'.hash('sha256',$url).'.json';
+    if (is_file($cache) && filemtime($cache)>time()-3600) {
+        $cached=json_decode(file_get_contents($cache),true);if (is_array($cached)) json_response($cached);
+    }
+    rate_limit('video-thumbnail',120,3600);
+    // The destination is fixed. Never request user-selected hosts or follow redirects.
+    $endpoint='https://vimeo.com/api/oembed.json?url='.rawurlencode($url);
+    $raw=false;
+    if (function_exists('curl_init')) {
+        $c=curl_init($endpoint);
+        curl_setopt_array($c,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_CONNECTTIMEOUT=>3,CURLOPT_TIMEOUT=>5,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_SSL_VERIFYHOST=>2,CURLOPT_USERAGENT=>'Fisital/1.0',CURLOPT_WRITEFUNCTION=>static function($ch,$chunk) use (&$raw) {if ($raw===false) $raw='';if(strlen($raw)+strlen($chunk)>262144)return 0;$raw.=$chunk;return strlen($chunk);}]);
+        $ok=curl_exec($c);$status=curl_getinfo($c,CURLINFO_RESPONSE_CODE);curl_close($c);
+        if ($ok===false || $status!==200) $raw=false;
+    } elseif (filter_var(ini_get('allow_url_fopen'),FILTER_VALIDATE_BOOLEAN)) {
+        $context=stream_context_create(['http'=>['timeout'=>5,'follow_location'=>0,'header'=>"User-Agent: Fisital/1.0\r\n"],'ssl'=>['verify_peer'=>true,'verify_peer_name'=>true]]);
+        $raw=@file_get_contents($endpoint,false,$context,0,262144);
+    }
+    $meta=$raw?json_decode($raw,true):[];$thumbnail=$meta['thumbnail_url']??'';
+    if (!is_string($thumbnail)||!str_starts_with($thumbnail,'https://')||!preg_match('~^https://(?:[a-z0-9-]+\.)*vimeocdn\.com/~i',$thumbnail)) $thumbnail='';
+    $result=['thumbnail'=>$thumbnail];
+    if ($thumbnail!=='' && (is_dir($dir)||@mkdir($dir,0700,true))) @file_put_contents($cache,json_encode($result),LOCK_EX);
+    json_response($result);
+}
 if ($method==='GET' && $action==='session') json_response(authenticated()?admin_state():['csrf'=>csrf()]);
 if ($method!=='POST') fail('Método no permitido.',405);
 check_csrf();

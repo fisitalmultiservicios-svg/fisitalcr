@@ -36,7 +36,7 @@ function security_headers(): void {
     header('X-Content-Type-Options: nosniff'); header('X-Frame-Options: DENY');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://player.vimeo.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://player.vimeo.com https://drive.google.com https://www.facebook.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'");
     header('Cache-Control: no-store, private');
     if ($https) header('Strict-Transport-Security: max-age=31536000');
 }
@@ -90,12 +90,15 @@ function text(mixed $v, int $max=5000): string {
 }
 function media(mixed $v): string {
     $s=text($v,2048); if ($s==='') return '';
+    if (preg_match('~^(?:(?:www|m)\.)?(?:youtube\.com|youtu\.be|vimeo\.com)/~i',$s)) $s='https://'.$s;
     if (preg_match('~^uploads/[a-f0-9]{40}\.(?:jpg|png|webp|gif|mp4|webm)$~D',$s)) return $s;
     if (!filter_var($s,FILTER_VALIDATE_URL) || strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https' || parse_url($s,PHP_URL_USER)!==null || preg_match('/[\s\x00-\x1f"<>\\\\]/',$s)) fail('Usa un archivo subido o un enlace HTTPS válido.');
     return $s;
 }
 function website_url(mixed $v): string {
-    $s=media($v);
+    $s=text($v,2048);
+    $s=preg_replace('~^(?:https?://)?(?:www\.)?wa\.me(?=/|$)~i','https://wa.me',$s);
+    $s=media($s);
     if ($s!=='' && strtolower(parse_url($s,PHP_URL_SCHEME)??'')!=='https') fail('La URL debe comenzar con https://.');
     return $s;
 }
@@ -129,7 +132,7 @@ function document_data(mixed $input): array {
     $cfg=$input['cfg']??[]; if (!is_array($cfg)) fail('Ajustes inválidos.');
     $email=text($cfg['email']??'',254); if (!filter_var($email,FILTER_VALIDATE_EMAIL)) fail('Correo inválido.');
     $whatsapp=text($cfg['whatsapp']??'',16); if ($whatsapp!==''&&!preg_match('/^\d{8,15}$/D',$whatsapp)) fail('WhatsApp debe incluir código de país y solo números.');
-    $d['cfg']=['email'=>$email,'whatsapp'=>$whatsapp,'waMsg'=>text($cfg['waMsg']??'',1000)];
+    $d['cfg']=['email'=>$email,'whatsapp'=>$whatsapp,'waMsg'=>text($cfg['waMsg']??'',1000),'contactUrl'=>website_url($cfg['contactUrl']??'')];
     foreach (['cats','ncats'] as $key) {
         if (!isset($cfg[$key]) || !is_array($cfg[$key]) || !array_is_list($cfg[$key]) || count($cfg[$key])>50) fail('Categorías inválidas.');
         $d['cfg'][$key]=array_map(fn($v)=>text($v,100),$cfg[$key]);
