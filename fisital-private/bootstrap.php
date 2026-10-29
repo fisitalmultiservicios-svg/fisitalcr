@@ -106,7 +106,7 @@ function color(mixed $v): string { $s=text($v,7); if (!preg_match('/^#[0-9a-f]{6
 function document_data(mixed $input): array {
     if (!is_array($input)) fail('Contenido inválido.');
     $schemas=[
-        'portfolio'=>['title','cat','year','client','emoji','a','b','vis','img','video'],
+        'portfolio'=>['title','cat','year','client','emoji','a','b','vis','img','video','format'],
         'news'=>['title','cat','date','read','summary','a','b','feat','img'],
         'products'=>['name','icon','status','desc','img','url'],
         'clients'=>['name','img','url','vis'],
@@ -120,6 +120,7 @@ function document_data(mixed $input): array {
             $r=['id'=>$item['id']]; $ids[$item['id']]=true;
             foreach ($fields as $field) {
                 if (in_array($field,['vis','feat'],true)) { if (!is_bool($item[$field]??null)) fail('Indicador inválido.'); $r[$field]=$item[$field]; }
+                elseif ($field==='format') { $format=$item[$field]??'Automático';if(!in_array($format,['Automático','Vertical','Horizontal'],true)) fail('Formato de video inválido.');$r[$field]=$format; }
                 elseif ($field==='url') $r[$field]=website_url($item[$field]??'');
                 elseif (in_array($field,['img','video'],true)) $r[$field]=media($item[$field]??'');
                 elseif (in_array($field,['a','b'],true)) $r[$field]=color($item[$field]??'');
@@ -144,7 +145,8 @@ function document_data(mixed $input): array {
         $d['home'][$key]=in_array($key,['logo','favicon'],true)?media($value):(in_array($key,['col1','col2'],true)?color($value):text($value));
     }
     $reel=$input['reel']??[]; if (!is_array($reel)) fail('Showreel inválido.');
-    $d['reel']=['title'=>text($reel['title']??'Historias con calidad de cine'),'text'=>text($reel['text']??'Mira nuestro trabajo en acción.'),'poster'=>media($reel['poster']??''),'video'=>media($reel['video']??'')];
+    $d['reel']=['title'=>text($reel['title']??'Historias con calidad de cine'),'text'=>text($reel['text']??'Mira nuestro trabajo en acción.'),'poster'=>media($reel['poster']??''),'video'=>media($reel['video']??''),'format'=>text($reel['format']??'Automático',20)];
+    if (!in_array($d['reel']['format'],['Automático','Vertical','Horizontal'],true)) fail('Formato de video inválido.');
     return $d;
 }
 function rate_limit(string $kind, int $max, int $window): void {

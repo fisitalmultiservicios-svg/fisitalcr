@@ -12,7 +12,7 @@ if ($method==='GET' && $action==='video_thumbnail') {
     if (!in_array($url,$allowed,true)) fail('Video no publicado.',404);
     $dir=FISITAL_PRIVATE_DIR.'/video-cache';$cache=$dir.'/'.hash('sha256',$url).'.json';
     if (is_file($cache) && filemtime($cache)>time()-3600) {
-        $cached=json_decode(file_get_contents($cache),true);if (is_array($cached)) json_response($cached);
+        $cached=json_decode(file_get_contents($cache),true);if (is_array($cached)&&isset($cached['width'],$cached['height'])) json_response($cached);
     }
     rate_limit('video-thumbnail',120,3600);
     // The destination is fixed. Never request user-selected hosts or follow redirects.
@@ -29,8 +29,8 @@ if ($method==='GET' && $action==='video_thumbnail') {
     }
     $meta=$raw?json_decode($raw,true):[];$thumbnail=$meta['thumbnail_url']??'';
     if (!is_string($thumbnail)||!str_starts_with($thumbnail,'https://')||!preg_match('~^https://(?:[a-z0-9-]+\.)*vimeocdn\.com/~i',$thumbnail)) $thumbnail='';
-    $result=['thumbnail'=>$thumbnail];
-    if ($thumbnail!=='' && (is_dir($dir)||@mkdir($dir,0700,true))) @file_put_contents($cache,json_encode($result),LOCK_EX);
+    $result=['thumbnail'=>$thumbnail,'width'=>max(0,(int)($meta['width']??0)),'height'=>max(0,(int)($meta['height']??0))];
+    if (($thumbnail!==''||($result['width']>0&&$result['height']>0)) && (is_dir($dir)||@mkdir($dir,0700,true))) @file_put_contents($cache,json_encode($result),LOCK_EX);
     json_response($result);
 }
 if ($method==='GET' && $action==='session') json_response(authenticated()?admin_state():['csrf'=>csrf()]);

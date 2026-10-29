@@ -13,3 +13,8 @@ assert.equal(links.normalize('http://www.wa.me/message/ABC'),'https://wa.me/mess
 assert.equal(links.contact({contactUrl:'wa.me/message/ABC',whatsapp:'50688887777'}),'https://wa.me/message/ABC');
 assert(links.contact({whatsapp:'50688887777'}).startsWith('https://wa.me/50688887777?text='));
 console.log('PASS video URL formats, Facebook reel, YouTube thumbnails/timestamps, private Vimeo, Drive, MP4 and WhatsApp normalization.');
+
+assert.equal(links.ratio(links.video("https://www.youtube.com/shorts/dQw4w9WgXcQ")),9/16);
+assert.equal(links.ratio(links.video("https://www.facebook.com/example/videos/123")),16/9);
+assert.equal(links.ratio(links.video("https://www.facebook.com/reel/123")),9/16);
+assert.equal(links.ratio({},"Vertical"),9/16);

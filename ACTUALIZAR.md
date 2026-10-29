@@ -1,4 +1,4 @@
-# Actualización: videos externos, portadas y enlaces de WhatsApp
+# Actualización: videos verticales y horizontales e imágenes ampliadas
 
 Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos. El ZIP contiene cinco archivos de código y esta guía.
 
@@ -6,7 +6,9 @@ La versión actual añade reproductores de videos externos y un destino configur
 
 ## Descargar
 
-[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-videos-whatsapp.zip)
+[Descargar ZIP de actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.zip)
+
+[Alternativa TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.tar.gz). Ambos paquetes contienen los mismos archivos; usa solo uno.
 
 ## Instalar desde cPanel
 
@@ -17,13 +19,28 @@ La versión actual añade reproductores de videos externos y un destino configur
    - `public_html/api.php`
    - `fisital-private/bootstrap.php`
 3. En **Administrador de archivos**, entra a la carpeta principal de tu cuenta, donde están `public_html` y `fisital-private`, una junto a la otra.
-4. Sube `fisitalcr-actualizacion-videos-whatsapp.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
+4. Sube `fisitalcr-actualizacion-multimedia.zip` a esa carpeta principal. NO lo extraigas dentro de public_html.
 5. Selecciona el ZIP y pulsa **Extraer** en la misma carpeta. Acepta reemplazar index.php, admin.php, api.php y bootstrap.php. También se añade public_html/enlaces.js. No elimines las carpetas actuales: se deben combinar sus contenidos.
 6. Verifica que los archivos nuevos quedaron en las rutas indicadas y que exista public_html/enlaces.js. El ZIP no incluye `config.php`, `conexion.php`, `uploads`, el instalador ni archivos SQL. No omitas enlaces.js o api.php: son necesarios para las nuevas funciones. Mantén intactos tu configuración privada, medios y base de datos.
 7. Elimina el ZIP del hosting. La guía ACTUALIZAR.md queda fuera de public_html.
 8. Abre de nuevo `https://fisitalcr.com/admin.php` y pulsa **Ctrl + F5** para recargar sin caché. Inicia sesión con tu contraseña habitual.
 
 Si tu dominio tiene una raíz pública distinta de public_html, mueve manualmente los dos PHP públicos a esa raíz, y bootstrap.php a la carpeta privada existente. No modifiques conexion.php.
+
+## Videos verticales y horizontales
+
+- El reproductor se ajusta al ancho y alto de la pantalla sin estirar ni recortar el video. El tamaño se recalcula al girar el teléfono o redimensionar la ventana.
+- En **Automático**, se usan las dimensiones reales de MP4/WebM al abrirlos; los enlaces de Reels y Shorts se identifican como verticales. Para Vimeo se usan las dimensiones que devuelve el proveedor.
+- Un iframe externo no permite inspeccionar directamente el video por las restricciones entre dominios. Un enlace normal de YouTube, Facebook, Drive o Vimeo sin dimensiones disponibles usa inicialmente formato horizontal.
+- Si el video externo se muestra en un formato incorrecto, abre **Portafolio → Editar → Formato del video**, elige **Vertical** u **Horizontal** y guarda. La misma opción está disponible en **Showreel**.
+- Estas opciones cambian el tamaño del reproductor, no los permisos de inserción del proveedor. El mensaje de bloqueo de Facebook continúa dependiendo de Facebook.
+
+## Ampliar imágenes
+
+- Pulsa una imagen del portafolio, noticias o productos para verla completa en una ventana superpuesta, ajustada a la pantalla.
+- Cierra con **Cerrar ×**, la tecla **Escape** o pulsando fuera de la imagen.
+- En un proyecto con imagen de portada y video, la imagen se amplía y el botón **Ver video** abre el reproductor.
+- Las miniaturas automáticas de videos siguen abriendo el video; los logos de clientes conservan su enlace al cliente.
 
 ## Videos del portafolio y portada automática
 

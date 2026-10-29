@@ -8,7 +8,7 @@ full = common + ['LEEME-CPANEL.md', 'ACTUALIZAR.md', 'fisital-private/.htaccess'
  'public_html/.htaccess', 'public_html/.user.ini',
  'public_html/conexion.php', 'public_html/instalar.php', 'public_html/uploads/.htaccess']
 (root/'descargas').mkdir(exist_ok=True)
-for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-videos-whatsapp.zip', common+['ACTUALIZAR.md'])]:
+for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-clientes.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-videos-whatsapp.zip', common+['ACTUALIZAR.md']), ('fisitalcr-actualizacion-multimedia.zip', common+['ACTUALIZAR.md'])]:
  target = root/'descargas'/filename
  with ZipFile(target, 'w', ZIP_DEFLATED) as archive:
   # No directory entries in update ZIP: keep permissions of existing directories.
@@ -29,18 +29,19 @@ for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actua
 import io
 import tarfile
 from zipfile import ZipFile
-source = root/'descargas/fisitalcr-actualizacion-videos-whatsapp.zip'
-target = root/'descargas/fisitalcr-actualizacion-videos-whatsapp.tar.gz'
-with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:
- for entry in zip_source.infolist():
-  if entry.is_dir(): continue
-  data=zip_source.read(entry.filename)
-  info=tarfile.TarInfo(entry.filename);info.size=len(data)
-  info.mode=0o600 if entry.filename.startswith('fisital-private/') else 0o644
-  archive.addfile(info,io.BytesIO(data))
-with tarfile.open(target,'r:gz') as archive, ZipFile(source) as zip_source:
- assert set(archive.getnames())==set(zip_source.namelist())
- for entry in archive.getmembers():
-  assert entry.isfile() and not entry.name.startswith('/') and '..' not in Path(entry.name).parts
-  assert archive.extractfile(entry).read()==zip_source.read(entry.name)
-print(target.name,target.stat().st_size,'bytes; contenido idéntico al ZIP verificado')
+for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia']:
+ source = root/'descargas'/(basename+'.zip')
+ target = root/'descargas'/(basename+'.tar.gz')
+ with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:
+  for entry in zip_source.infolist():
+   if entry.is_dir(): continue
+   data=zip_source.read(entry.filename)
+   info=tarfile.TarInfo(entry.filename);info.size=len(data)
+   info.mode=0o600 if entry.filename.startswith('fisital-private/') else 0o644
+   archive.addfile(info,io.BytesIO(data))
+ with tarfile.open(target,'r:gz') as archive, ZipFile(source) as zip_source:
+  assert set(archive.getnames())==set(zip_source.namelist())
+  for entry in archive.getmembers():
+   assert entry.isfile() and not entry.name.startswith('/') and '..' not in Path(entry.name).parts
+   assert archive.extractfile(entry).read()==zip_source.read(entry.name)
+ print(target.name,target.stat().st_size,'bytes; contenido idéntico al ZIP verificado')

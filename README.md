@@ -1,5 +1,7 @@
 # FisitalCR
 
+Última actualización: [multimedia ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.tar.gz): videos verticales/horizontales e imágenes ampliadas. Ver [ACTUALIZAR.md](ACTUALIZAR.md).
+
 Si el navegador rechaza el ZIP, [descargar la misma actualización en TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-videos-whatsapp.tar.gz). Se sube sin descomprimir al directorio principal de cPanel y se usa Extraer, igual que el ZIP.
 
 **Instalaciones existentes:** [descargar actualización](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-cpanel-actualizacion.zip) y seguir [ACTUALIZAR.md](ACTUALIZAR.md). Incluye videos externos (Facebook/Reels, YouTube/Shorts, Vimeo, Drive, MP4/WebM), portadas cuando el proveedor las ofrece y destinos web o wa.me para el contacto, clientes y productos; además de las mejoras anteriores. No requiere reinstalar ni cambiar la base de datos.
@@ -15,3 +17,5 @@ Para desarrollo, usar este checkout aislado; no crear un worktree salvo petició
 Validación: `python3 tests/smoke.py` sobre base LOCAL VACÍA y `node tests/browser.cjs` y `node tests/branding-mobile.cjs` y `node tests/clients.cjs` después. Consultar las cabeceras de ambos archivos para requisitos. Son pruebas destructivas de datos exclusivamente locales; no ejecutarlas contra producción. Las pruebas del navegador requieren Playwright y Chromium. No desplegar herramientas ni pruebas en la raíz pública.
 
 Pruebas de enlaces: `node tests/enlaces.cjs`. Después de las pruebas de navegador anteriores, ejecutar `node tests/videos-contact.cjs`; los proveedores externos se simulan y sus permisos reales deben comprobarse en el hosting.
+
+`tests/orientation-images.cjs` prueba orientación con MP4 reales generados localmente en /tmp mediante ffmpeg, proveedores simulados, tamaños de pantalla y ampliación de imágenes. Ejecutar después de smoke.py y las demás pruebas de navegador.
