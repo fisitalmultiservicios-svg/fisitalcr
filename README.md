@@ -1,5 +1,9 @@
 # FisitalCR
 
+## Propuestas visuales para elegir
+
+Seis prototipos HTML independientes, con el contenido público del respaldo actual e imágenes de referencia. [Galería e instrucciones](propuestas-fisital/LEEME.md), [comparativa de portadas](propuestas-fisital/vistas-previas/comparativa.jpg), [descargar ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-seis-propuestas-html.zip). No reemplazan el sitio instalado ni modifican su panel.
+
 Corrección de navegación pública: [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-portafolio.tar.gz). Portafolio y Noticias funcionan de forma independiente de la carga de reproductores.
 
 Última actualización: [multimedia ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-actualizacion-multimedia.tar.gz): videos verticales/horizontales e imágenes ampliadas. Ver [ACTUALIZAR.md](ACTUALIZAR.md).
