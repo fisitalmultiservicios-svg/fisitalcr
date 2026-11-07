@@ -9,7 +9,7 @@ full = common + ['LEEME-CPANEL.md', 'ACTUALIZAR.md', 'ORBITA-CPANEL.md', 'fisita
  'public_html/.htaccess', 'public_html/.user.ini',
  'public_html/conexion.php', 'public_html/instalar.php', 'public_html/uploads/.htaccess']
 (root/'descargas').mkdir(exist_ok=True)
-for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', update), ('fisitalcr-actualizacion-clientes.zip', update), ('fisitalcr-actualizacion-videos-whatsapp.zip', update), ('fisitalcr-actualizacion-multimedia.zip', update), ('fisitalcr-correccion-portafolio.zip', update), ('fisitalcr-orbita-oficial.zip', update)]:
+for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', update), ('fisitalcr-actualizacion-clientes.zip', update), ('fisitalcr-actualizacion-videos-whatsapp.zip', update), ('fisitalcr-actualizacion-multimedia.zip', update), ('fisitalcr-correccion-portafolio.zip', update), ('fisitalcr-orbita-oficial.zip', update), ('fisitalcr-orbita-ajustes.zip', update)]:
  target = root/'descargas'/filename
  with ZipFile(target, 'w', ZIP_DEFLATED) as archive:
   # Preserve existing directories; only declare the new static-assets directory in updates.
@@ -32,7 +32,7 @@ for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actua
 import io
 import tarfile
 from zipfile import ZipFile
-for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia','fisitalcr-correccion-portafolio','fisitalcr-orbita-oficial']:
+for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia','fisitalcr-correccion-portafolio','fisitalcr-orbita-oficial','fisitalcr-orbita-ajustes']:
  source = root/'descargas'/(basename+'.zip')
  target = root/'descargas'/(basename+'.tar.gz')
  with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:

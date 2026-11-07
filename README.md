@@ -1,3 +1,5 @@
+Actualización más reciente: [descargar ajustes de Órbita](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-ajustes.zip). Instrucciones: [ORBITA-CPANEL.md](ORBITA-CPANEL.md).
+
 # FisitalCR
 
 ## Diseño oficial Órbita

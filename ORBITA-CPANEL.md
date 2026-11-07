@@ -7,7 +7,7 @@ Esta actualización aplica el estilo 05 elegido al sitio público y al panel adm
 1. Desde cPanel respalda la base de datos y los archivos del sitio.
 2. Guarda una copia de `public_html/index.php`, `admin.php`, `api.php`, `enlaces.js` y `fisital-private/bootstrap.php`.
 3. Cierra las pestañas del panel para no guardar desde una versión anterior durante la actualización.
-4. Descarga `fisitalcr-orbita-oficial.zip` o su alternativa TAR.GZ. Solo necesitas uno.
+4. Descarga `fisitalcr-orbita-ajustes.zip` o su alternativa TAR.GZ. Solo necesitas uno.
 
 ## 2. Subir y extraer
 
@@ -113,3 +113,15 @@ El panel pide confirmación si intentas salir con cambios de apariencia sin guar
 Probado localmente con PHP 8.3, MariaDB y Chromium: instalación y autenticación, contenido legado sin clave theme, guardado de paletas independientes, fondos y subida de imágenes, degradados, personalización por sección, persistencia, restauración, validación de colores/URLs/rangos, formularios reales y bloqueo de envíos en vista previa. También se verificaron videos, navegación y vistas móviles de 320 a 1480 píxeles. Las respuestas de reproductores externos se simularon en las pruebas; sus permisos siguen dependiendo de cada proveedor.
 
 Los ajustes visuales se guardan como parte del documento JSON existente en MySQL. La actualización no trae credenciales, datos de contacto recibidos ni una copia de tu base de datos. Su publicación en GitHub no instala archivos automáticamente en tu cPanel.
+
+## Ajustes del inicio, fuentes y portadas
+
+- **Inicio (landing) → Panel flotante: Tu negocio, un paso adelante** permite cambiar las dos líneas del título, etiquetas, menús, estado y tarjetas flotantes. Sus productos se toman de Productos. El logo se toma de Marca y navegación; pulsa Guardar después de subirlo.
+- **Apariencia → Web / Panel** permite elegir Fuente de los textos y Fuente de los títulos. En cada sección también puedes activar Personalizar y cambiar sus fuentes; Heredar usa la fuente general. Opciones: Sistema, Arial, Segoe UI, Verdana, Trebuchet MS, Georgia, Palatino y Monospace. El navegador usa una alternativa si una fuente no está instalada. No se descargan fuentes de terceros.
+- **Apariencia → Presentación del logo → Original** conserva sus colores. Al cargar un logo nuevo se activa Original en web y panel. Si ya lo habías cargado, selecciona Original en ambos y guarda. El panel flotante ahora usa ese mismo archivo.
+- La franja debajo del inicio muestra únicamente logos de clientes visibles con imagen, pequeños, en gris, de izquierda a derecha. Los nombres completos siguen en Clientes. La animación se pausa al señalarla y respeta la preferencia de movimiento reducido del dispositivo.
+- El inicio ya no muestra proyectos del portafolio. **Portafolio** sigue siendo una página separada accesible desde el menú.
+- **Portafolio → Editar proyecto → Crear portada desde una escena del video** extrae una escena del MP4/WebM subido al sitio y carga un JPEG. Pulsa Guardar. Si el proyecto no tiene imagen, al guardar se crea automáticamente. Para los proyectos anteriores, abre cada uno y usa el botón; una portada existente se conserva hasta que decidas regenerarla. La web también obtiene una escena temporal cuando un video local aún no tiene portada guardada.
+- La captura funciona con videos que el navegador pueda reproducir. Para enlaces externos siguen las portadas de YouTube/Vimeo o la vista previa permitida por Facebook. Un video externo que bloquee la inserción requiere abrir el original; puedes subir una portada propia.
+
+Después de actualizar pulsa **Ctrl + F5** en la web y el panel. No ejecutes instalar.php ni importes SQL. No se reemplazan config.php, conexion.php, uploads ni datos de MySQL.

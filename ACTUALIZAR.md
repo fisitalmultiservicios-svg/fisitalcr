@@ -1,6 +1,6 @@
 # Corrección de navegación pública y actualización multimedia
 
-**Versión actual: Órbita oficial para web y panel.** Descargar [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.tar.gz) y seguir **ORBITA-CPANEL.md**. La carpeta public_html/orbita debe subirse completa. No requiere reinstalar ni cambios de tablas.
+**Versión actual: Órbita oficial para web y panel.** Descargar [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-ajustes.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-ajustes.tar.gz) y seguir **ORBITA-CPANEL.md**. La carpeta public_html/orbita debe subirse completa. No requiere reinstalar ni cambios de tablas.
 
 Los apartados siguientes describen funciones anteriores que siguen disponibles. Para instalar la versión actual, prevalecen las instrucciones de ORBITA-CPANEL.md.
 

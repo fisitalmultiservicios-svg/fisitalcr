@@ -106,6 +106,7 @@ function website_url(mixed $v): string {
 function color(mixed $v): string { $s=text($v,7); if (!preg_match('/^#[0-9a-f]{6}$/iD',$s)) fail('Color inválido.'); return $s; }
 function theme_fields(string $scope): array {
     $fields=[
+        'fontBody'=>['Fuente de los textos','Sistema','select',['Sistema', 'Arial', 'Segoe UI', 'Verdana', 'Trebuchet MS', 'Georgia', 'Palatino', 'Monospace']], 'fontHeading'=>['Fuente de los títulos','Sistema','select',['Sistema', 'Arial', 'Segoe UI', 'Verdana', 'Trebuchet MS', 'Georgia', 'Palatino', 'Monospace']],
         'bg'=>['Fondo general','#f3f6fc','color'], 'surface'=>['Tarjetas y paneles','#ffffff','color'],
         'text'=>['Texto y títulos','#1f2c48','color'], 'muted'=>['Texto secundario','#65728a','color'],
         'line'=>['Bordes y divisiones','#dce4f2','color'], 'accent'=>['Acento principal','#657ee2','color'],
@@ -123,7 +124,7 @@ function theme_section_names(string $scope): array {
         ['login'=>'Acceso al panel','sidebar'=>'Menú lateral','home'=>'Resumen','land'=>'Inicio (editor)','portfolio'=>'Portafolio (editor)','news'=>'Noticias (editor)','clients'=>'Clientes (editor)','products'=>'Productos (editor)','reel'=>'Showreel (editor)','leads'=>'Contactos recibidos','cfg'=>'Ajustes','appearance'=>'Apariencia'];
 }
 function theme_section_fields(): array {
-    return ['enabled'=>['Personalizar esta sección',false,'check'],'background'=>['Color de fondo','#f3f6fc','color'],
+    return ['fontBody'=>['Fuente de los textos','Heredar','select',['Heredar', 'Sistema', 'Arial', 'Segoe UI', 'Verdana', 'Trebuchet MS', 'Georgia', 'Palatino', 'Monospace']], 'fontHeading'=>['Fuente de los títulos','Heredar','select',['Heredar', 'Sistema', 'Arial', 'Segoe UI', 'Verdana', 'Trebuchet MS', 'Georgia', 'Palatino', 'Monospace']], 'enabled'=>['Personalizar esta sección',false,'check'],'background'=>['Color de fondo','#f3f6fc','color'],
         'gradient'=>['Usar degradado',false,'check'],'end'=>['Segundo color del degradado','#e6edff','color'],
         'image'=>['Imagen de fondo','','image'],'overlay'=>['Color de capa sobre la imagen','#ffffff','color'],
         'opacity'=>['Opacidad de la capa sobre la imagen (%)',25,'range',0,90],
@@ -200,7 +201,7 @@ function document_data(mixed $input): array {
         if (!isset($cfg[$key]) || !is_array($cfg[$key]) || !array_is_list($cfg[$key]) || count($cfg[$key])>50) fail('Categorías inválidas.');
         $d['cfg'][$key]=array_map(fn($v)=>text($v,100),$cfg[$key]);
     }
-    $homeKeys=['logo','favicon','cl1','cl2','nav6','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
+    $homeKeys=['orbitTitle1', 'orbitTitle2', 'orbitEyebrow', 'orbitStatus', 'orbitCompany', 'orbitMenu1', 'orbitMenu2', 'orbitMenu3', 'orbitCaption', 'orbitTag1', 'orbitTag2', 'orbitTag3', 'orbitFloatTitle', 'orbitFloatText', 'orbitFloatStatus','logo','favicon','cl1','cl2','nav6','col1','col2','nav1','nav2','nav3','nav4','nav5','pill','h1a','h1b','sub','b1','b2','av1','av2','av3','avtags','ti1','term','s1n','s1t','s2n','s2t','s3n','s3t','pt1','pt2','pt3','st1','st2','st3','c1','c2','cb','pr1','pr2','pr3','pr4','pf1','pf2','pg1','pg2','pg3','pg4','ng1','ng2','ng3','ng4','foot'];
     $d['home']=[]; if (!is_array($input['home']??[])) fail('Inicio inválido.');
     foreach ($input['home']??[] as $key=>$value) {
         if (!in_array($key,$homeKeys,true)) fail('Campo de inicio desconocido.');
