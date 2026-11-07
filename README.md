@@ -1,3 +1,5 @@
+Corrección del tamaño de logos de clientes para Órbita ya instalado: [descargar ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-correccion-logos-clientes.zip). [Instrucciones](CORREGIR-LOGOS.md). Conserva la configuración y el logo de Fisital.
+
 Actualización más reciente: [descargar ajustes de Órbita](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-ajustes.zip). Instrucciones: [ORBITA-CPANEL.md](ORBITA-CPANEL.md).
 
 # FisitalCR

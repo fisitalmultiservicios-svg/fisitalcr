@@ -9,14 +9,14 @@ full = common + ['LEEME-CPANEL.md', 'ACTUALIZAR.md', 'ORBITA-CPANEL.md', 'fisita
  'public_html/.htaccess', 'public_html/.user.ini',
  'public_html/conexion.php', 'public_html/instalar.php', 'public_html/uploads/.htaccess']
 (root/'descargas').mkdir(exist_ok=True)
-for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', update), ('fisitalcr-actualizacion-clientes.zip', update), ('fisitalcr-actualizacion-videos-whatsapp.zip', update), ('fisitalcr-actualizacion-multimedia.zip', update), ('fisitalcr-correccion-portafolio.zip', update), ('fisitalcr-orbita-oficial.zip', update), ('fisitalcr-orbita-ajustes.zip', update)]:
+for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actualizacion.zip', update), ('fisitalcr-actualizacion-clientes.zip', update), ('fisitalcr-actualizacion-videos-whatsapp.zip', update), ('fisitalcr-actualizacion-multimedia.zip', update), ('fisitalcr-correccion-portafolio.zip', update), ('fisitalcr-orbita-oficial.zip', update), ('fisitalcr-orbita-ajustes.zip', update), ('fisitalcr-correccion-logos-clientes.zip', ['public_html/index.php','public_html/admin.php','CORREGIR-LOGOS.md'])]:
  target = root/'descargas'/filename
  with ZipFile(target, 'w', ZIP_DEFLATED) as archive:
   # Preserve existing directories; only declare the new static-assets directory in updates.
   if filename == 'fisitalcr-cpanel.zip':
    for directory in ['fisital-private/', 'public_html/', 'public_html/uploads/','public_html/orbita/']:
     info=ZipInfo(directory);info.external_attr=((0o40700 if directory=='fisital-private/' else 0o40755)<<16)|0x10;archive.writestr(info,'')
-  if filename != 'fisitalcr-cpanel.zip':
+  if filename != 'fisitalcr-cpanel.zip' and any(name.startswith('public_html/orbita/') for name in files):
    info=ZipInfo('public_html/orbita/');info.external_attr=(0o40755<<16)|0x10;archive.writestr(info,'')
   for name in files:
    info=ZipInfo(name);info.compress_type=ZIP_DEFLATED
@@ -32,7 +32,7 @@ for filename, files in [('fisitalcr-cpanel.zip', full), ('fisitalcr-cpanel-actua
 import io
 import tarfile
 from zipfile import ZipFile
-for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia','fisitalcr-correccion-portafolio','fisitalcr-orbita-oficial','fisitalcr-orbita-ajustes']:
+for basename in ['fisitalcr-actualizacion-videos-whatsapp','fisitalcr-actualizacion-multimedia','fisitalcr-correccion-portafolio','fisitalcr-orbita-oficial','fisitalcr-orbita-ajustes','fisitalcr-correccion-logos-clientes']:
  source = root/'descargas'/(basename+'.zip')
  target = root/'descargas'/(basename+'.tar.gz')
  with ZipFile(source) as zip_source, tarfile.open(target, 'w:gz', format=tarfile.USTAR_FORMAT) as archive:
