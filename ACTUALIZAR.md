@@ -1,5 +1,9 @@
 # Corrección de navegación pública y actualización multimedia
 
+**Versión actual: Órbita oficial para web y panel.** Descargar [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.zip) o [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.tar.gz) y seguir **ORBITA-CPANEL.md**. La carpeta public_html/orbita debe subirse completa. No requiere reinstalar ni cambios de tablas.
+
+Los apartados siguientes describen funciones anteriores que siguen disponibles. Para instalar la versión actual, prevalecen las instrucciones de ORBITA-CPANEL.md.
+
 Este paquete actualiza una instalación existente. No ejecutes otra vez instalar.php y no importes SQL. No requiere cambiar las tablas de la base de datos. El ZIP contiene cinco archivos de código y esta guía.
 
 La versión actual añade reproductores de videos externos y un destino configurable para el botón Hola, Fisital, y acepta enlaces wa.me en clientes y productos. Conserva la sección de clientes, el logo, favicon y menú móvil. No reemplaza contactos, imágenes, contraseñas ni configuración.

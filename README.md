@@ -1,5 +1,9 @@
 # FisitalCR
 
+## Diseño oficial Órbita
+
+Sitio público y panel administrativo con el estilo 05 elegido, personalización de colores y fondos por sección y vista previa. [Instalación y uso](ORBITA-CPANEL.md) · [ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.zip) · [TAR.GZ](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-orbita-oficial.tar.gz). Los ajustes se guardan en el documento JSON de MySQL, sin migración de tablas.
+
 ## Propuestas visuales para elegir
 
 Seis prototipos HTML independientes, con el contenido público del respaldo actual e imágenes de referencia. [Galería e instrucciones](propuestas-fisital/LEEME.md), [comparativa de portadas](propuestas-fisital/vistas-previas/comparativa.jpg), [descargar ZIP](https://github.com/fisitalmultiservicios-svg/fisitalcr/raw/refs/heads/main/descargas/fisitalcr-seis-propuestas-html.zip). No reemplazan el sitio instalado ni modifican su panel.
@@ -27,3 +31,5 @@ Pruebas de enlaces: `node tests/enlaces.cjs`. Después de las pruebas de navegad
 `tests/orientation-images.cjs` prueba orientación con MP4 reales generados localmente en /tmp mediante ffmpeg, proveedores simulados, tamaños de pantalla y ampliación de imágenes. Ejecutar después de smoke.py y las demás pruebas de navegador.
 
 `tests/navigation-resilience.cjs` verifica navegación de escritorio y móvil con el módulo multimedia actual, anterior, ausente o con error. Ejecutar después de smoke.py y antes de agotar los límites locales de intentos de login.
+
+`tests/orbita-theme.cjs` prueba validación, persistencia, vista previa autenticada sin envíos, independencia web/panel, fondos, restauración y tamaños de pantalla. Ejecutar sobre una base local preparada por smoke.py; nunca en producción.

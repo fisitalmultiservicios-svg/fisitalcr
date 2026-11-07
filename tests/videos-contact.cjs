@@ -16,7 +16,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
  await context.route('https://i.ytimg.com/**',r=>r.fulfill({contentType:'image/png',body:png}));await context.route('https://www.youtube.com/embed/**',r=>r.fulfill({body:'<title>Reproductor simulado</title>'}));
  const visitor=await context.newPage();visitor.on('pageerror',e=>errors.push(e.message));await visitor.goto(base+'/index.php');
  assert.equal(await visitor.locator('a.wa').first().getAttribute('href'),'https://'+chat);
- assert.equal(await visitor.locator('#prg .product-link').first().getAttribute('href'),'https://wa.me/message/PRODUCTO123');assert.equal(await visitor.locator('#clientgrid a').getAttribute('href'),'https://wa.me/50688886666');
+ assert.equal(await visitor.locator('#prg .product-link').first().getAttribute('href'),'https://wa.me/message/PRODUCTO123');assert.equal(await visitor.locator('#clientgrid a').filter({hasText:'Cliente WhatsApp'}).last().getAttribute('href'),'https://wa.me/50688886666');
  await context.route('https://wa.me/**',r=>r.fulfill({body:'<title>Destino WhatsApp simulado</title>'}));
  const [popup]=await Promise.all([visitor.waitForEvent('popup'),visitor.locator('a.wa').first().click()]);await popup.waitForLoadState();assert(popup.url().startsWith('https://wa.me/50688887777'));await popup.close();
  await visitor.locator('nav a[data-v=portafolio]').click();const first=visitor.locator('#pfg .card').first();const preview=first.locator('iframe');await preview.waitFor();const previewUrl=new URL(await preview.getAttribute('src'));assert.equal(previewUrl.hostname,'www.facebook.com');assert.equal(previewUrl.searchParams.get('href'),fb);assert.equal(previewUrl.searchParams.get('autoplay'),'false');

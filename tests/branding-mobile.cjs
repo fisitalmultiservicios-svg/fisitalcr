@@ -9,7 +9,7 @@ const assert=require('node:assert/strict');
  const base=process.env.FISITAL_TEST_URL||'http://127.0.0.1:8080';
  await Promise.all([page.waitForResponse(r=>r.url().includes('action=session')),page.goto(base+'/admin.php')]);
  await page.locator('#pw').fill('NewPassword!2026');await page.locator('#go').click();await page.locator('#app').waitFor({state:'visible'});
- await page.locator('[data-t=land]').click();
+ await page.evaluate(()=>{D.theme.web.logoMode='Original';D.theme.admin.logoMode='Original'});await page.locator('[data-t=land]').click();
  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64');
  const paths={};
  for(const field of ['logo','favicon']){

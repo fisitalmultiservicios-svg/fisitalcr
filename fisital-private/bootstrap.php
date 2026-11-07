@@ -30,13 +30,14 @@ function config(): array {
     }
     return $c;
 }
-function security_headers(): void {
+function security_headers(bool $allowSameOriginFrame = false): void {
     $https = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
     if ((config()['require_https'] ?? true) && !$https) fail('Abre este sitio con HTTPS. Activa SSL y Force HTTPS Redirect en cPanel.', 400);
-    header('X-Content-Type-Options: nosniff'); header('X-Frame-Options: DENY');
+    header('X-Content-Type-Options: nosniff'); header($allowSameOriginFrame?'X-Frame-Options: SAMEORIGIN':'X-Frame-Options: DENY');
+    $frameAncestors=$allowSameOriginFrame?"'self'":"'none'";
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https: blob:; frame-src https://www.youtube.com https://player.vimeo.com https://drive.google.com https://www.facebook.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https: blob:; frame-src 'self' https://www.youtube.com https://player.vimeo.com https://drive.google.com https://www.facebook.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors $frameAncestors; object-src 'none'");
     header('Cache-Control: no-store, private');
     if ($https) header('Strict-Transport-Security: max-age=31536000');
 }
@@ -75,7 +76,7 @@ function authenticated(): bool {
 }
 function require_admin(): void { if (!authenticated()) fail('Inicia sesión para continuar.',401); }
 function admin_state(): array {
-    $r=row(); $d=json_decode($r['content'],true,512,JSON_THROW_ON_ERROR);
+    $r=row(); $d=json_decode($r['content'],true,512,JSON_THROW_ON_ERROR); $d['theme']=theme_validate($d['theme']??[]);
     $d['leads']=db()->query('SELECT id, empresa, tel, src, created_at AS date FROM fisital_leads ORDER BY id')->fetchAll();
     foreach ($d['leads'] as &$lead) { $lead['id']=(int)$lead['id']; $lead['date']=str_replace(' ','T',$lead['date']).'Z'; }
     return ['data'=>$d,'revision'=>(int)$r['revision'],'csrf'=>csrf()];
@@ -103,6 +104,67 @@ function website_url(mixed $v): string {
     return $s;
 }
 function color(mixed $v): string { $s=text($v,7); if (!preg_match('/^#[0-9a-f]{6}$/iD',$s)) fail('Color inválido.'); return $s; }
+function theme_fields(string $scope): array {
+    $fields=[
+        'bg'=>['Fondo general','#f3f6fc','color'], 'surface'=>['Tarjetas y paneles','#ffffff','color'],
+        'text'=>['Texto y títulos','#1f2c48','color'], 'muted'=>['Texto secundario','#65728a','color'],
+        'line'=>['Bordes y divisiones','#dce4f2','color'], 'accent'=>['Acento principal','#657ee2','color'],
+        'secondary'=>['Acento secundario y luz','#d0e1ff','color'], 'button'=>['Fondo de botones principales','#657ee2','color'],
+        'buttonText'=>['Texto de botones principales','#ffffff','color'], 'nav'=>[$scope==='web'?'Fondo del menú':'Fondo del menú lateral','#ffffff','color'],
+        'navText'=>['Texto del menú','#344568','color'], 'image'=>['Imagen del fondo general','','image'],'gradient'=>['Usar degradado general',false,'check'],'end'=>['Segundo color del fondo general','#e7edfc','color'],'navGlass'=>['Opacidad del menú (%)',90,'range',0,100],
+        'glass'=>['Opacidad de tarjetas (%)',90,'range',0,100], 'radius'=>['Redondeado de tarjetas',28,'range',0,40],
+        'glow'=>['Mostrar luces ambientales',true,'check'], 'logoMode'=>['Presentación del logo','Oscuro','select',['Original','Oscuro','Claro']],
+    ];
+    if ($scope==='admin') $fields['loginBg']=['Fondo del acceso al panel','#edf2fc','color'];
+    return $fields;
+}
+function theme_section_names(string $scope): array {
+    return $scope==='web'?['hero'=>'Portada principal','services'=>'Servicios y cifras','products'=>'Productos','clients'=>'Clientes','portfolio'=>'Portafolio','news'=>'Noticias','contact'=>'Contacto','footer'=>'Pie de página']:
+        ['login'=>'Acceso al panel','sidebar'=>'Menú lateral','home'=>'Resumen','land'=>'Inicio (editor)','portfolio'=>'Portafolio (editor)','news'=>'Noticias (editor)','clients'=>'Clientes (editor)','products'=>'Productos (editor)','reel'=>'Showreel (editor)','leads'=>'Contactos recibidos','cfg'=>'Ajustes','appearance'=>'Apariencia'];
+}
+function theme_section_fields(): array {
+    return ['enabled'=>['Personalizar esta sección',false,'check'],'background'=>['Color de fondo','#f3f6fc','color'],
+        'gradient'=>['Usar degradado',false,'check'],'end'=>['Segundo color del degradado','#e6edff','color'],
+        'image'=>['Imagen de fondo','','image'],'overlay'=>['Color de capa sobre la imagen','#ffffff','color'],
+        'opacity'=>['Opacidad de la capa sobre la imagen (%)',25,'range',0,90],
+        'text'=>['Texto y títulos','#1f2c48','color'],'muted'=>['Texto secundario','#65728a','color'],
+        'surface'=>['Fondo de tarjetas','#ffffff','color'],'accent'=>['Acento y enlaces','#657ee2','color'],'button'=>['Fondo de botones','#657ee2','color'],'buttonText'=>['Texto de botones','#ffffff','color'],'line'=>['Bordes de la sección','#dce4f2','color']];
+}
+function theme_schema(): array {return ['web'=>theme_fields('web'),'admin'=>theme_fields('admin'),'sectionFields'=>theme_section_fields(),'sections'=>theme_section_names('web'),'adminSections'=>theme_section_names('admin')];}
+function theme_defaults(): array {
+    $result=[];
+    foreach (['web','admin'] as $scope) foreach(theme_fields($scope) as $key=>$field) $result[$scope][$key]=$field[1];
+    foreach (['sections'=>'web','adminSections'=>'admin'] as $group=>$scope) foreach(theme_section_names($scope) as $key=>$label) foreach(theme_section_fields() as $field=>$definition) $result[$group][$key][$field]=$definition[1];
+    return $result;
+}
+function theme_validate_fields(mixed $input,array $definitions): array {
+    if(!is_array($input)) fail('Configuración visual inválida.');
+    foreach($input as $key=>$unused) if(!array_key_exists($key,$definitions)) fail('Propiedad visual desconocida.');
+    $result=[];
+    foreach($definitions as $key=>$definition) {
+        $v=$input[$key]??$definition[1];$type=$definition[2];
+        if($type==='color') $v=color($v);
+        elseif($type==='image') $v=media($v);
+        elseif($type==='check') {if(!is_bool($v))fail('Opción visual inválida.');}
+        elseif($type==='range') {if(!is_int($v)||$v<$definition[3]||$v>$definition[4])fail('Valor visual fuera de rango.');}
+        elseif($type==='select') {if(!in_array($v,$definition[3],true))fail('Selección visual inválida.');}
+        $result[$key]=$v;
+    }
+    return $result;
+}
+function theme_validate(mixed $input): array {
+    if(!is_array($input))fail('Tema inválido.');
+    foreach($input as $key=>$unused)if(!in_array($key,['web','admin','sections','adminSections'],true))fail('Grupo visual desconocido.');
+    $result=[];
+    foreach(['web','admin'] as $scope) $result[$scope]=theme_validate_fields($input[$scope]??[],theme_fields($scope));
+    foreach(['sections'=>'web','adminSections'=>'admin'] as $group=>$scope){
+        $sections=$input[$group]??[];if(!is_array($sections))fail('Secciones visuales inválidas.');
+        foreach($sections as $key=>$unused)if(!array_key_exists($key,theme_section_names($scope)))fail('Sección visual desconocida.');
+        foreach(theme_section_names($scope) as $key=>$label)$result[$group][$key]=theme_validate_fields($sections[$key]??[],theme_section_fields());
+    }
+    return $result;
+}
+
 function document_data(mixed $input): array {
     if (!is_array($input)) fail('Contenido inválido.');
     $schemas=[
@@ -147,6 +209,7 @@ function document_data(mixed $input): array {
     $reel=$input['reel']??[]; if (!is_array($reel)) fail('Showreel inválido.');
     $d['reel']=['title'=>text($reel['title']??'Historias con calidad de cine'),'text'=>text($reel['text']??'Mira nuestro trabajo en acción.'),'poster'=>media($reel['poster']??''),'video'=>media($reel['video']??''),'format'=>text($reel['format']??'Automático',20)];
     if (!in_array($d['reel']['format'],['Automático','Vertical','Horizontal'],true)) fail('Formato de video inválido.');
+    $d['theme']=theme_validate($input['theme']??[]);
     return $d;
 }
 function rate_limit(string $kind, int $max, int $window): void {

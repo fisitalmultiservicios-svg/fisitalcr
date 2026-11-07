@@ -48,7 +48,7 @@ if ($action==='lead') {
     $b=body(); if (text($b['website']??'',200)!=='') json_response(['ok'=>true]);
     rate_limit('lead',5,600);
     $empresa=text($b['empresa']??'',150); $tel=text($b['tel']??'',40); $src=text($b['src']??'',30);
-    if ($empresa==='' || !preg_match('/^[+0-9 ()-]{7,40}$/D',$tel) || strlen(preg_replace('/\D/','',$tel))<7 || !in_array($src,['Productos','Noticias'],true)) fail('Revisa la empresa y el número de teléfono.');
+    if ($empresa==='' || !preg_match('/^[+0-9 ()-]{7,40}$/D',$tel) || strlen(preg_replace('/\D/','',$tel))<7 || !in_array($src,['Productos','Noticias','Contacto'],true)) fail('Revisa la empresa y el número de teléfono.');
     $q=db()->prepare('INSERT INTO fisital_leads (empresa,tel,src,created_at) VALUES (?,?,?,UTC_TIMESTAMP())');$q->execute([$empresa,$tel,$src]);
     json_response(['ok'=>true],201);
 }
